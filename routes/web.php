@@ -14,5 +14,20 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('messages.index');
 });
+Route::get('/reg', function () {
+    return view('messages.reg');
+});
+Route::post('/reg', 'Auth\RegisterController@register');
+Route::get('/reg_success', function () {
+    return view('messages.reg_success');
+});
+Route::get('/login', function () {
+    return view('messages.login');
+});
+Route::post('/login', 'Auth\LoginController@login');
+
+Route::get('/logout', 'Auth\LoginController@logout');
+
+
