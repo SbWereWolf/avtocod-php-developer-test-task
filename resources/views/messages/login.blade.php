@@ -61,20 +61,20 @@
             <a class="navbar-brand" href="#">Avtocod | Стена сообщений</a>
         </div>
         <ul class="nav navbar-nav">
-            <li><a href="#">Главная</a></li>
-            <li class="active"><a href="#">Авторизация</a></li>
-            <li><a href="#">Регистрация</a></li>
+            <li><a href="/">Главная</a></li>
+            <li class="active"><a href="login">Авторизация</a></li>
+            <li><a href="reg">Регистрация</a></li>
         </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <li class="navbar-text"><span class="glyphicon glyphicon-user"></span> %username%</li>
-            <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Выход</a></li>
+        <ul class="nav navbar-nav navbar-right {{$visibleProperty}}" >
+            <li class="navbar-text"><span class="glyphicon glyphicon-user"></span>{{$username}}</li>
+            <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> Выход</a></li>
         </ul>
     </div>
 </nav>
 
 <div class="container">
 
-    <form class="form-signin">
+    <form class="form-signin" action="login" method="POST">
         <div class="alert alert-danger alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
             <strong>Ошибка!</strong> Вход в систему с указанными данными невозможен.
@@ -83,10 +83,10 @@
         <h2 class="form-signin-heading">Авторизация</h2>
 
         <label for="user_login" class="sr-only">Логин</label>
-        <input type="text" id="user_login" class="form-control" placeholder="Логин" required autofocus>
+        <input type="text" id="user_login" name="name" class="form-control" placeholder="Логин" required autofocus>
 
         <label for="user_password" class="sr-only">Пароль</label>
-        <input type="password" id="user_password" class="form-control" placeholder="Пароль" required>
+        <input type="password" id="user_password" name="password" class="form-control" placeholder="Пароль" required>
 
         <div class="checkbox">
             <label>
@@ -94,6 +94,8 @@
             </label>
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
+
+        {{ csrf_field() }}
     </form>
 
 </div>

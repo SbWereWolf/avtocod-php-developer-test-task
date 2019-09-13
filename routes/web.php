@@ -13,18 +13,49 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/**
+ * @return array
+ */
+function getUserBlock(): array
+{
+    $user = auth()->user();
+
+    $isObject = is_object($user);
+    if ($isObject) {
+        $name = $user->name;
+        $mayShow = 'visible';
+    }
+    if (!$isObject) {
+        $name = '';
+        $mayShow = 'invisible';
+    }
+    $userBlock = ['username' => $name, 'visibleProperty' => $mayShow];
+
+    return $userBlock;
+}
+
 Route::get('/', function () {
-    return view('messages.index');
+
+    $userBlock = getUserBlock();
+    return view('messages.index',$userBlock);
 });
+
 Route::get('/reg', function () {
-    return view('messages.reg');
+
+    $userBlock = getUserBlock();
+    return view('messages.reg',$userBlock);
 });
 Route::post('/reg', 'Auth\RegisterController@register');
 Route::get('/reg_success', function () {
-    return view('messages.reg_success');
+
+    $userBlock = getUserBlock();
+    return view('messages.reg_success',$userBlock);
 });
+
 Route::get('/login', function () {
-    return view('messages.login');
+
+    $userBlock = getUserBlock();
+    return view('messages.login',$userBlock);
 });
 Route::post('/login', 'Auth\LoginController@login');
 

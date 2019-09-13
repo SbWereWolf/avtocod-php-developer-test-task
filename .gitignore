@@ -24,3 +24,5 @@ coverage*
 /public/storage
 npm-debug.log
 /node_modules
+
+.htaccess
