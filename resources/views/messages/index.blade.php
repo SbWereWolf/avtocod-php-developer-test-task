@@ -5,9 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-          crossorigin="anonymous" />
+    <link
+        rel="stylesheet" type="text/css"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous"/>
 
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -40,11 +42,8 @@
         <div class="navbar-header">
             <a class="navbar-brand" href="#">Avtocod | Стена сообщений</a>
         </div>
-        <ul class="nav navbar-nav">
-            <li class="active"><a href="/">Главная</a></li>
-            <li><a href="login">Авторизация</a></li>
-            <li><a href="reg">Регистрация</a></li>
-        </ul>
+        <?php use App\BusinessLogic\Css;$main = Css::ACTIVE; ?>
+        @include('messages.partial.site-menu')
         @include('messages.partial.username')
     </div>
 </nav>
@@ -55,7 +54,7 @@
         <h1>Сообщения от всех пользователей</h1>
     </div>
 
-    <form action="" method="post" class="form-horizontal">
+    <form action="" method="post" class="form-horizontal {{$forUser}}">
         <h2 class="form-signin-heading">Написать сообщение</h2>
 
         @include('messages.partial.form-errors')
@@ -64,86 +63,35 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="message_text">Текст сообщения:</label>
-                    <textarea id="message_text" name="message_text" class="form-control"
+                    <textarea id="message_text" name="content"
+                              class="form-control"
                               placeholder="Ваше сообщение" rows="4"
                               required="required"></textarea>
                 </div>
             </div>
             <div class="col-md-12 text-right">
-                <input type="submit" class="btn btn-success btn-send" value="Отправить сообщение" />
+                <input type="submit" class="btn btn-success btn-send"
+                       value="Отправить сообщение"/>
             </div>
+
+            {{ csrf_field() }}
         </div>
     </form>
 
-    <div class="row wall-message">
-        <div class="col-md-1 col-xs-2">
-            <img src="http://lorempixel.com/200/200/people/" alt="" class="img-circle user-avatar" />
-        </div>
-        <div class="col-md-11 col-xs-10">
-            <p>
-                <strong>Eugene:</strong>
-            </p>
-            <blockquote>
-                Привет! Как твои дела?
-            </blockquote>
-        </div>
-    </div>
+    @include('messages.partial.message-wall')
 
-    <div class="row wall-message">
-        <div class="col-md-1 col-xs-2">
-            <img src="http://lorempixel.com/201/201/people/" alt="" class="img-circle user-avatar" />
-        </div>
-        <div class="col-md-11 col-xs-10">
-            <p>
-                <strong>Mikle:</strong>
-            </p>
-            <blockquote>
-                Цикл, без использования формальных признаков поэзии, диссонирует мелодический скрытый смысл,
-                но не рифмами. Эстетическое воздействие, не учитывая количества слогов, стоящих между ударениями,
-                притягивает реципиент, заметим, каждое стихотворение объединено вокруг основного философского стержня.
-            </blockquote>
-        </div>
-    </div>
-
-    <div class="row wall-message">
-        <div class="col-md-1 col-xs-2">
-            <img src="http://lorempixel.com/202/202/people/" alt="" class="img-circle user-avatar" />
-        </div>
-        <div class="col-md-11 col-xs-10">
-            <p>
-                <strong>Tony:</strong>
-            </p>
-            <blockquote>
-                Метафора выбирает мифологический поток сознания, несмотря на отсутствие единого пунктуационного
-                алгоритма.
-                Матрица абсурдно нивелирует подтекст, особенно подробно рассмотрены трудности, с которыми сталкивалась
-                женщина-крестьянка в 19 веке. Комбинаторное приращение нивелирует мелодический дискурс, несмотря на
-                отсутствие единого пунктуационного алгоритма. Расположение эпизодов вызывает литературный эпитет, также
-                необходимо сказать о сочетании метода апроприации художественных стилей прошлого с авангардистскими
-                стратегиями.
-            </blockquote>
-        </div>
-    </div>
-
-    <div class="row wall-message">
-        <div class="col-md-1 col-xs-2">
-            <img src="http://lorempixel.com/203/203/people/" alt="" class="img-circle user-avatar" />
-        </div>
-        <div class="col-md-11 col-xs-10">
-            <p>
-                <strong>Andre:</strong>
-            </p>
-            <blockquote>
-                Развивая эту тему, типизация отталкивает амфибрахий – это уже пятая стадия понимания по М.Бахтину.
-            </blockquote>
-        </div>
-    </div>
 </div>
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-        crossorigin="anonymous"></script>
+<script
+    type="text/javascript"
+    src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
+
+</script>
+<script
+    type="text/javascript"
+    src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
 
 </body>
 </html>

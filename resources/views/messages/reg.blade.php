@@ -60,11 +60,8 @@
         <div class="navbar-header">
             <a class="navbar-brand" href="#">Avtocod | Стена сообщений</a>
         </div>
-        <ul class="nav navbar-nav">
-            <li><a href="/">Главная</a></li>
-            <li><a href="login">Авторизация</a></li>
-            <li class="active"><a href="reg">Регистрация</a></li>
-        </ul>
+        <?php use App\BusinessLogic\Css;$reg = Css::ACTIVE; ?>
+        @include('messages.partial.site-menu')
         @include('messages.partial.username')
     </div>
 </nav>

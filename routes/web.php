@@ -1,5 +1,6 @@
 <?php
 
+use App\BusinessLogic\UserBlock;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,48 +14,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/**
- * @return array
- */
-function getUserBlock(): array
-{
-    $user = auth()->user();
-
-    $isObject = is_object($user);
-    if ($isObject) {
-        $name = $user->name;
-        $mayShow = 'visible';
-    }
-    if (!$isObject) {
-        $name = '';
-        $mayShow = 'invisible';
-    }
-    $userBlock = ['username' => $name, 'visibleProperty' => $mayShow];
-
-    return $userBlock;
-}
-
-Route::get('/', function () {
-
-    $userBlock = getUserBlock();
-    return view('messages.index',$userBlock);
-});
+Route::get('/', 'MessageController@index');
+Route::post('/', 'MessageController@store');
 
 Route::get('/reg', function () {
 
-    $userBlock = getUserBlock();
+    $userBlock = UserBlock::get();
     return view('messages.reg',$userBlock);
 });
 Route::post('/reg', 'Auth\RegisterController@register');
 Route::get('/reg_success', function () {
 
-    $userBlock = getUserBlock();
+    $userBlock = UserBlock::get();
     return view('messages.reg_success',$userBlock);
 });
 
 Route::get('/login', function () {
 
-    $userBlock = getUserBlock();
+    $userBlock = UserBlock::get();
     return view('messages.login',$userBlock);
 });
 Route::post('/login', 'Auth\LoginController@login');

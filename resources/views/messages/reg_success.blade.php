@@ -23,11 +23,7 @@
         <div class="navbar-header">
             <a class="navbar-brand" href="#">Avtocod | Стена сообщений</a>
         </div>
-        <ul class="nav navbar-nav">
-            <li><a href="/">Главная</a></li>
-            <li><a href="login">Авторизация</a></li>
-            <li><a href="reg">Регистрация</a></li>
-        </ul>
+        @include('messages.partial.site-menu')
         @include('messages.partial.username')
     </div>
 </nav>
