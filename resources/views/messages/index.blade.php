@@ -45,10 +45,7 @@
             <li><a href="login">Авторизация</a></li>
             <li><a href="reg">Регистрация</a></li>
         </ul>
-        <ul class="nav navbar-nav navbar-right {{$visibleProperty}}" >
-            <li class="navbar-text"><span class="glyphicon glyphicon-user"></span>{{$username}}</li>
-            <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> Выход</a></li>
-        </ul>
+        @include('messages.partial.username')
     </div>
 </nav>
 
@@ -59,10 +56,9 @@
     </div>
 
     <form action="" method="post" class="form-horizontal">
-        <div class="alert alert-danger alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <strong>Ошибка!</strong> Сообщение не может быть пустым.
-        </div>
+        <h2 class="form-signin-heading">Написать сообщение</h2>
+
+        @include('messages.partial.form-errors')
 
         <div class="controls">
             <div class="col-md-12">
@@ -73,7 +69,7 @@
                               required="required"></textarea>
                 </div>
             </div>
-            <div class="col-md-12 text-center">
+            <div class="col-md-12 text-right">
                 <input type="submit" class="btn btn-success btn-send" value="Отправить сообщение" />
             </div>
         </div>

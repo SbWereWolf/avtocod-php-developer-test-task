@@ -65,10 +65,7 @@
             <li><a href="login">Авторизация</a></li>
             <li class="active"><a href="reg">Регистрация</a></li>
         </ul>
-        <ul class="nav navbar-nav navbar-right {{$visibleProperty}}" >
-            <li class="navbar-text"><span class="glyphicon glyphicon-user"></span>{{$username}}</li>
-            <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> Выход</a></li>
-        </ul>
+        @include('messages.partial.username')
     </div>
 </nav>
 
@@ -76,6 +73,8 @@
 
     <form class="form-signup" action="reg" method="POST">
         <h2 class="form-signup-heading">Регистрация</h2>
+
+        @include('messages.partial.form-errors')
 
         <label for="user_login" class="sr-only">Логин</label>
         <input type="text" id="user_login" name ="name" class="form-control" placeholder="Логин" required autofocus>
