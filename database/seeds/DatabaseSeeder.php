@@ -12,6 +12,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        factory(User::class)->times(\mt_rand(1, 5))->create();
+        factory(User::class)->times(\mt_rand(3, 7))->create()
+            ->each(function (User $user) {
+                $rounds = \mt_rand(0, 2);
+                for ($index = 0; $index < $rounds; $index++) {
+                    $user->messages()
+                        ->save(factory(App\Models\Message::class)
+                            ->make());
+                }
+            });;
     }
 }
