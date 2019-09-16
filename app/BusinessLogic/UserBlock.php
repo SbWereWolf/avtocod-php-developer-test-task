@@ -6,6 +6,10 @@ namespace App\BusinessLogic;
 
 class UserBlock implements Css
 {
+    const USERNAME = 'username';
+    const FOR_USER = 'forUser';
+    const FOR_GUEST = 'forGuest';
+
     /**
      * Получить параметры разметки для
      * областей зависимых от пользователя
@@ -27,8 +31,8 @@ class UserBlock implements Css
             $forUser = static::VISIBLE;
             $forGuest = static::INVISIBLE;
         }
-        $userBlock = ['username' => $name,
-            'forUser' => $forUser, 'forGuest' => $forGuest];
+        $userBlock = [self::USERNAME => $name,
+            self::FOR_USER => $forUser, self::FOR_GUEST => $forGuest];
 
         return $userBlock;
     }

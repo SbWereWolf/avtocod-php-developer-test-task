@@ -38,7 +38,7 @@ class Message extends Model
     /**
      * Все сообщения совместно с информацией об авторах
      *
-     * @return Message[]
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public static function withAuthors()
     {

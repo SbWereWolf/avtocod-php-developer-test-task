@@ -24,7 +24,7 @@ class MessageHandler
     /**
      * Получить все сообщения
      *
-     * @return array
+     * @return \App\Models\Message[]
      */
     public static function getAll(): array
     {

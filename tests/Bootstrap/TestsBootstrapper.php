@@ -2,11 +2,15 @@
 
 namespace Tests\Bootstrap;
 
-use Illuminate\Contracts\Config\Repository;
-use Illuminate\Support\Str;
-use Illuminate\Contracts\Console\Kernel;
-use AvtoDev\DevTools\Tests\PHPUnit\Traits\CreatesApplicationTrait;
+use App\Models\Message;
+use App\Models\User;
 use AvtoDev\DevTools\Tests\Bootstrap\AbstractLaravelTestsBootstrapper;
+use AvtoDev\DevTools\Tests\PHPUnit\Traits\CreatesApplicationTrait;
+use Illuminate\Contracts\Config\Repository;
+use Illuminate\Contracts\Console\Kernel;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 class TestsBootstrapper extends AbstractLaravelTestsBootstrapper
 {
@@ -57,6 +61,22 @@ class TestsBootstrapper extends AbstractLaravelTestsBootstrapper
         }
 
         $this->log('Refresh migrations..');
+        /*
+         * Миграция удаления колонки email не может корректно откатиться
+         * если в таблице `users` больше одной записи, поэтому перед
+         * абсолютным rollback необходимо таблицу `users` очистить
+         * */
+        $name = DB::getDefaultConnection();
+        $connection = Schema::connection($name);
+        $has = $connection->hasTable(Message::TABLE);
+        if ($has) {
+            DB::table(Message::TABLE)->delete();
+        }
+        $has = $connection->hasTable(User::TABLE);
+        if ($has) {
+            DB::table(User::TABLE)->delete();
+        }
+
         $kernel->call('migrate:refresh');
 
         $this->log('Apply seeds..');

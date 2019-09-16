@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Models\User;
+use App\BusinessLogic\UserBlock;
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
 {
@@ -57,7 +58,7 @@ class RegisterController extends Controller
         return Validator::make($data,
             ['name' => ['required','string','min:8','max:60',
                 'not_regex:/\W\D|\s/'],
-            'password' => ['required','string','min:6','confirmed',
+             'password' => ['required','string','min:6','confirmed',
                 'regex:/(?=.*[A-Z]{1})(?=.*[a-z]{1})(?=.*\d{1})/'],],
             $notification);
     }
@@ -65,7 +66,7 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array $data
      *
      * @return \App\Models\User
      */
@@ -75,5 +76,16 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm()
+    {
+        $userBlock = UserBlock::get();
+        return view('messages.reg', $userBlock);
     }
 }
