@@ -1,7 +1,7 @@
 @isset($messages)
     @foreach ($messages as $message)
 
-        <?php $diff = 0;?>
+        <?php $userId = auth()->id() ?>
         @include('messages.partial.message')
     @endforeach
 @endisset

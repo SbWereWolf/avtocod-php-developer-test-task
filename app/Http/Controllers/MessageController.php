@@ -2,27 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\BusinessLogic\MessageHandler;
 use App\BusinessLogic\UserBlock;
-use App\Message;
+use App\Http\Validation;
+use App\Http\WebRouter;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Response;
 
 class MessageController extends Controller
 {
-    const CONTENT = 'content';
-
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
-        $twits['messages'] = Message::withAuthors()->all();
-
+        $twits['messages'] = MessageHandler::getAll();
         $userBlock = UserBlock::get();
 
         $pageData = array_merge($twits, $userBlock);
+
         return view('messages.index', $pageData);
     }
 
@@ -31,46 +31,40 @@ class MessageController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(Request $request)
     {
+        $user = (int)auth()->id();
+        Validation::ofAuthentication($user)->validate();
 
-        $id = auth()->user()->getAuthIdentifier();
-        $data = $request->all();
+        $content = (string)$request[Validation::CONTENT];
+        Validation::beforeStore($content)->validate();
 
-        $this->validator($data)->validate();
-        Message::create([
-            Message::CONTENT => $data[self::CONTENT],
-            Message::USER => $id,
-        ]);
+        $handler = new MessageHandler($user);
+        $handler->store($content);
 
-        return redirect('/');
-    }
-
-    /**
-     * Get a validator for an incoming request.
-     *
-     * @param array $data
-     *
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            self::CONTENT => 'required|string|max:255',
-        ]);
+        return redirect(WebRouter::ALL_MESSAGES);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Message $message
+     * @param \App\Models\Message $message
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function destroy(Message $message)
+    public function destroy(Request $request)
     {
-        //
+        $user = (int)auth()->id();
+        Validation::ofAuthentication($user)->validate();
+
+        $message = (int)$request[Validation::ID];
+        Validation::beforeDestroy($message)->validate();
+
+        $handler = new MessageHandler($user);
+        $handler->destroy($message);
+
+        return redirect(WebRouter::ALL_MESSAGES);
     }
 }

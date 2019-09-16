@@ -39,9 +39,7 @@
 
 <nav class="navbar navbar-default">
     <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">Avtocod | Стена сообщений</a>
-        </div>
+        @include('messages.partial.title')
         <?php use App\BusinessLogic\Css;$main = Css::ACTIVE; ?>
         @include('messages.partial.site-menu')
         @include('messages.partial.username')
@@ -54,7 +52,8 @@
         <h1>Сообщения от всех пользователей</h1>
     </div>
 
-    <form action="" method="post" class="form-horizontal {{$forUser}}">
+    <form action="/message/store" method="post"
+          class="form-horizontal {{$forUser}}">
         <h2 class="form-signin-heading">Написать сообщение</h2>
 
         @include('messages.partial.form-errors')

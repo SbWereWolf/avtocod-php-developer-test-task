@@ -20,9 +20,7 @@
 
 <nav class="navbar navbar-default">
     <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">Avtocod | Стена сообщений</a>
-        </div>
+        @include('messages.partial.title')
         @include('messages.partial.site-menu')
         @include('messages.partial.username')
     </div>
