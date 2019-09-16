@@ -12,7 +12,7 @@ use Illuminate\Http\Response;
 class MessageController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Показать все сообщения
      *
      * @return Response
      */
@@ -27,7 +27,7 @@ class MessageController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Написать на стене сообщение
      *
      * @param \Illuminate\Http\Request $request
      *
@@ -48,7 +48,7 @@ class MessageController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Стереть со стены сообщение
      *
      * @param \App\Models\Message $message
      *

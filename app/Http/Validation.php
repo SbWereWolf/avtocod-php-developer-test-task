@@ -7,14 +7,18 @@ use Illuminate\Support\Facades\Validator;
 
 class Validation
 {
+    // Параметр с текстом сообщения
     const CONTENT = 'content';
+    // Параметр с идентификатором сообщения
     const ID = 'id';
+    // Параметр с идентификатором учётной записи пользователя
     const AUTH = 'auth';
 
+
     /**
-     * Get a validator for an incoming request.
+     * Возвращает валидатор для проверки перед записью
      *
-     * @param array $data
+     * @param string $content собственно сообщение
      *
      * @return \Illuminate\Contracts\Validation\Validator
      */
@@ -25,12 +29,26 @@ class Validation
             [self::CONTENT.'.required'=>'Сообщение не может быть пустым']);
     }
 
+    /**
+     * Возвращает валидатор для проверки перед удалением
+     *
+     * @param int $message идентификатор сообщения
+     *
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
     public static function beforeDestroy(int $message)
     {
         return Validator::make([self::ID => $message],
             [self::ID => 'required|integer|gt:0',]);
     }
 
+    /**
+     * Возвращает валидатор для проверки неанонимности запроса
+     *
+     * @param int $user идентификатор учётной записи
+     *
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
     public static function ofAuthentication(int $user)
     {
         return Validator::make([self::AUTH => $user], [

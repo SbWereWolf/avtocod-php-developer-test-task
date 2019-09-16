@@ -37,10 +37,21 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    /**
+     * Имя колонки с логином пользователя
+     *
+     * @return string
+     */
     public function username()
     {
         return 'name';
     }
+
+    /**
+     * Возвращает страницу аутентификации
+     *
+     * @return \Illuminate\View\View
+     */
     public function showLoginForm()
     {
         return view('messages.login');

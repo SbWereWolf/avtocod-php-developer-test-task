@@ -7,6 +7,9 @@ namespace App\BusinessLogic;
 class UserBlock implements Css
 {
     /**
+     * Получить параметры разметки для
+     * областей зависимых от пользователя
+     *
      * @return array
      */
     public static function get(): array
