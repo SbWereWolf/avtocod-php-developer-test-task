@@ -44,7 +44,7 @@ class MessageController extends Controller
         $handler = new MessageHandler($user);
         $handler->store($content);
 
-        return redirect(WebRouter::ALL_MESSAGES);
+        return redirect()->route(WebRouter::ALL_MESSAGES);
     }
 
     /**
@@ -65,6 +65,6 @@ class MessageController extends Controller
         $handler = new MessageHandler($user);
         $handler->destroy($message);
 
-        return redirect(WebRouter::ALL_MESSAGES);
+        return redirect()->route(WebRouter::ALL_MESSAGES);
     }
 }

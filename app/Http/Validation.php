@@ -21,15 +21,14 @@ class Validation
     public static function beforeStore(string $content)
     {
         return Validator::make([self::CONTENT => $content],
-            [self::CONTENT => 'required|string|max:255',
-            ]);
+            [self::CONTENT => 'required|string|max:1024',],
+            [self::CONTENT.'.required'=>'Сообщение не может быть пустым']);
     }
 
     public static function beforeDestroy(int $message)
     {
         return Validator::make([self::ID => $message],
-            [self::ID => 'required|integer|gt:0',
-            ]);
+            [self::ID => 'required|integer|gt:0',]);
     }
 
     public static function ofAuthentication(int $user)

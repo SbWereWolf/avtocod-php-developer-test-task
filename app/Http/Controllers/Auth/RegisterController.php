@@ -48,10 +48,18 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
+        $notification = [
+            'name.not_regex' =>
+                'Логин должен состотоять только из букв и цифры и не должен содержать пробелов',
+            'password.regex' =>
+                'В пароле должна быть хотя бы одна прописная буква, хотя бы одна заглавная буква и хотя бы одна цифра',
+        ];
+        return Validator::make($data,
+            ['name' => ['required','string','min:8','max:60',
+                'not_regex:/\W\D|\s/'],
+            'password' => ['required','string','min:6','confirmed',
+                'regex:/(?=.*[A-Z]{1})(?=.*[a-z]{1})(?=.*\d{1})/'],],
+            $notification);
     }
 
     /**
