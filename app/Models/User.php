@@ -10,6 +10,7 @@ class User extends Authenticatable
     use Notifiable;
 
     const TABLE = 'users';
+    const IS_ADMIN = 'is_admin';
 
     /**
      * The attributes that are mass assignable.
@@ -34,6 +35,6 @@ class User extends Authenticatable
     public function messages()
     {
         return $this->hasMany('App\Models\Message',
-            'users_id', 'id');
+            Message::USER, 'id');
     }
 }

@@ -24,7 +24,7 @@
         <form action="/message/destroy/{{$message->id}}"
               method="post"
               <?php use \App\BusinessLogic\Css; ?>
-              @if($userId === (int)$message->users_id)
+              @if($userId === (int)$message->users_id || $isAdmin)
               class="{{Css::VISIBLE}}"
               @endif
               @if($userId !== (int)$message->users_id)

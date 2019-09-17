@@ -43,7 +43,7 @@ class Message extends Model
     public static function withAuthors()
     {
         $result = static::with(static::AUTHOR)
-            ->orderBy('message.id', 'desc')
+            ->orderBy(Message::TABLE.'.'.Message::ID, 'desc')
             ->get();
 
         return $result;
@@ -58,6 +58,6 @@ class Message extends Model
     public function author()
     {
         return $this->belongsTo('App\Models\User',
-            'users_id', 'id');
+            self::USER, 'id');
     }
 }
